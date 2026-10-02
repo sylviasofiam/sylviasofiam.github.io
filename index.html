@@ -1,20 +1,1122 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
 <title>Sofi's Family Cookbook</title>
+
 <style>
-:root{--cream:#fbf8f1;--paper:#fffdf9;--blue:#6f8fa8;--deep:#2f4b5e;--pale:#dfeaf0;--line:#d9e0e2;--ink:#27343b;--muted:#6d777b;--shadow:0 14px 34px rgba(48,73,88,.09)}*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font:15px/1.55 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}header{padding:54px 22px 34px;text-align:center;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#f4f8fa,transparent)}.eyebrow{text-transform:uppercase;letter-spacing:.18em;font-size:11px;color:var(--blue);font-weight:700}h1{font:500 clamp(38px,6vw,66px)/1.05 Georgia,serif;color:var(--deep);margin:10px 0 12px}.sub{color:var(--muted);max-width:600px;margin:auto}.wrap{max-width:1080px;margin:auto;padding:30px 22px 70px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:30px}.filter{border:1px solid #bdcbd2;background:transparent;color:var(--deep);padding:9px 16px;border-radius:999px;cursor:pointer}.filter.active,.filter:hover{background:var(--deep);color:white;border-color:var(--deep)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}.card{background:var(--paper);border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:var(--shadow);transition:.2s}.card:hover{transform:translateY(-3px)}.photo{height:220px;background:#dbe5ea center/cover no-repeat;position:relative}.photo.lentils{background-image:linear-gradient(135deg,#d8e5ea,#f4e7d0)}.photo.orzo{background-image:linear-gradient(135deg,#e8d9c9,#cfdde4)}.dish{position:absolute;inset:22px;border-radius:50%;background:rgba(255,253,249,.86);display:grid;place-items:center;text-align:center;color:var(--deep);font:italic 21px Georgia,serif;border:1px solid rgba(47,75,94,.15)}.heart{position:absolute;right:14px;top:14px;width:39px;height:39px;border:0;border-radius:50%;background:#fffdf9e8;color:var(--deep);font-size:21px;cursor:pointer;box-shadow:0 4px 15px #0001}.heart.saved{background:var(--deep);color:white}.body{padding:21px}.tag{display:inline-block;color:var(--blue);font-size:11px;text-transform:uppercase;letter-spacing:.12em;font-weight:800}.body h2{font:500 25px Georgia,serif;color:var(--deep);margin:5px 0 7px}.desc{color:var(--muted);min-height:48px}.meta{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}.pill{background:#edf3f6;color:#496778;border-radius:999px;padding:5px 10px;font-size:12px}.open{width:100%;border:0;background:var(--pale);color:var(--deep);font-weight:700;border-radius:12px;padding:11px;cursor:pointer}.empty{text-align:center;color:var(--muted);padding:60px 0;display:none}dialog{border:0;border-radius:24px;padding:0;max-width:760px;width:calc(100% - 28px);box-shadow:0 30px 90px #263b4660;background:var(--paper)}dialog::backdrop{background:#21333d99}.modal{padding:30px}.top{display:flex;justify-content:space-between;gap:20px}.close{border:0;background:transparent;font-size:26px;color:var(--deep);cursor:pointer}.modal h2{font:500 34px Georgia,serif;color:var(--deep);margin:5px 0}.note{padding:14px 16px;background:#eef4f6;border-left:3px solid var(--blue);border-radius:9px;color:#4e626d;margin:16px 0}.cols{display:grid;grid-template-columns:.8fr 1.2fr;gap:30px;margin-top:25px}.modal h3{font:600 17px Georgia,serif;color:var(--deep);border-bottom:1px solid var(--line);padding-bottom:7px}.modal li{margin-bottom:8px}.source{font-size:12px;color:var(--muted);margin-top:22px}@media(max-width:650px){.cols{grid-template-columns:1fr}.photo{height:190px}}
-</style></head>
-<body><header><div class="eyebrow">Recipes worth keeping</div><h1>Sofi's Family Cookbook</h1><p class="sub">A little collection of favorites, everyday dinners, and family recipes passed down with love.</p></header>
-<main class="wrap"><nav class="toolbar"><button class="filter active" data-filter="all">All Recipes</button><button class="filter" data-filter="breakfast">Breakfast</button><button class="filter" data-filter="lunch">Lunch</button><button class="filter" data-filter="dinner">Dinner</button><button class="filter" data-filter="desserts">Desserts</button><button class="filter" data-filter="appetizers">Appetizers</button><button class="filter" data-filter="drinks">Drinks</button><button class="filter" data-filter="family">Family Recipes</button><button class="filter" data-filter="favorites">♡ Favorites</button></nav><section class="grid" id="grid"></section><div class="empty" id="empty">No recipes here yet — the cookbook is just getting started.</div></main><dialog id="recipeDialog"><div class="modal" id="modal"></div></dialog>
+
+:root{
+--cream:#fbf8f1;
+--paper:#fffdf9;
+--blue:#6f8fa8;
+--deep:#2f4b5e;
+--pale:#dfeaf0;
+--line:#d9e0e2;
+--ink:#27343b;
+--muted:#6d777b;
+--shadow:0 14px 34px rgba(48,73,88,.09)
+}
+
+*{
+box-sizing:border-box
+}
+
+body{
+margin:0;
+background:var(--cream);
+color:var(--ink);
+font:15px/1.55 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif
+}
+
+header{
+padding:54px 22px 34px;
+text-align:center;
+border-bottom:1px solid var(--line);
+background:linear-gradient(180deg,#f4f8fa,transparent)
+}
+
+.eyebrow{
+text-transform:uppercase;
+letter-spacing:.18em;
+font-size:11px;
+color:var(--blue);
+font-weight:700
+}
+
+h1{
+font:500 clamp(38px,6vw,66px)/1.05 Georgia,serif;
+color:var(--deep);
+margin:10px 0 12px
+}
+
+.sub{
+color:var(--muted);
+max-width:600px;
+margin:auto
+}
+
+.wrap{
+max-width:1080px;
+margin:auto;
+padding:30px 22px 70px
+}
+
+.toolbar{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+justify-content:center;
+margin-bottom:30px
+}
+
+.filter{
+border:1px solid #bdcbd2;
+background:transparent;
+color:var(--deep);
+padding:9px 16px;
+border-radius:999px;
+cursor:pointer
+}
+
+.filter.active,
+.filter:hover{
+background:var(--deep);
+color:white;
+border-color:var(--deep)
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:24px
+}
+
+.card{
+background:var(--paper);
+border:1px solid var(--line);
+border-radius:22px;
+overflow:hidden;
+box-shadow:var(--shadow);
+transition:.2s;
+position:relative
+}
+
+.card:hover{
+transform:translateY(-3px)
+}
+
+.card-accent{
+height:8px;
+background:linear-gradient(90deg,var(--pale),var(--blue))
+}
+
+.heart{
+position:absolute;
+right:18px;
+top:24px;
+width:39px;
+height:39px;
+border:1px solid var(--line);
+border-radius:50%;
+background:var(--paper);
+color:var(--deep);
+font-size:21px;
+cursor:pointer
+}
+
+.heart.saved{
+background:var(--deep);
+color:white;
+border-color:var(--deep)
+}
+
+.body{
+padding:27px 21px 21px
+}
+
+.tag{
+display:inline-block;
+color:var(--blue);
+font-size:11px;
+text-transform:uppercase;
+letter-spacing:.12em;
+font-weight:800;
+padding-right:50px
+}
+
+.body h2{
+font:500 25px Georgia,serif;
+color:var(--deep);
+margin:8px 0 10px;
+padding-right:40px
+}
+
+.desc{
+color:var(--muted);
+min-height:48px
+}
+
+.meta{
+display:flex;
+gap:8px;
+flex-wrap:wrap;
+margin:18px 0
+}
+
+.pill{
+background:#edf3f6;
+color:#496778;
+border-radius:999px;
+padding:5px 10px;
+font-size:12px
+}
+
+.open{
+width:100%;
+border:0;
+background:var(--pale);
+color:var(--deep);
+font-weight:700;
+border-radius:12px;
+padding:11px;
+cursor:pointer
+}
+
+.open:hover{
+background:#d5e5ec
+}
+
+.empty{
+text-align:center;
+color:var(--muted);
+padding:60px 0;
+display:none
+}
+
+dialog{
+border:0;
+border-radius:24px;
+padding:0;
+max-width:760px;
+width:calc(100% - 28px);
+box-shadow:0 30px 90px #263b4660;
+background:var(--paper)
+}
+
+dialog::backdrop{
+background:#21333d99
+}
+
+.modal{
+padding:30px
+}
+
+.top{
+display:flex;
+justify-content:space-between;
+gap:20px
+}
+
+.close{
+border:0;
+background:transparent;
+font-size:26px;
+color:var(--deep);
+cursor:pointer
+}
+
+.modal h2{
+font:500 34px Georgia,serif;
+color:var(--deep);
+margin:5px 0
+}
+
+.note{
+padding:14px 16px;
+background:#eef4f6;
+border-left:3px solid var(--blue);
+border-radius:9px;
+color:#4e626d;
+margin:16px 0
+}
+
+.cols{
+display:grid;
+grid-template-columns:.8fr 1.2fr;
+gap:30px;
+margin-top:25px
+}
+
+.modal h3{
+font:600 17px Georgia,serif;
+color:var(--deep);
+border-bottom:1px solid var(--line);
+padding-bottom:7px
+}
+
+.modal li{
+margin-bottom:8px
+}
+
+.source{
+font-size:12px;
+color:var(--muted);
+margin-top:22px
+}
+
+
+/* FOOTER */
+
+footer{
+border-top:1px solid var(--line);
+background:#f4f8fa;
+padding:28px 22px;
+display:flex;
+justify-content:center;
+align-items:center;
+gap:14px;
+color:var(--muted)
+}
+
+.footer-photo{
+width:52px;
+height:52px;
+border-radius:50%;
+object-fit:cover;
+border:2px solid var(--pale)
+}
+
+.footer-text{
+margin:0;
+font-size:14px
+}
+
+.footer-text strong{
+color:var(--deep);
+font-family:Georgia,serif;
+font-weight:500
+}
+
+
+@media(max-width:650px){
+
+.cols{
+grid-template-columns:1fr
+}
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="eyebrow">
+Recipes worth keeping
+</div>
+
+<h1>
+Sofi's Family Cookbook
+</h1>
+
+<p class="sub">
+A little collection of favorites, everyday dinners, and family recipes passed down with love.
+</p>
+
+</header>
+
+
+<main class="wrap">
+
+
+<nav class="toolbar">
+
+<button class="filter active" data-filter="all">
+All Recipes
+</button>
+
+<button class="filter" data-filter="breakfast">
+Breakfast
+</button>
+
+<button class="filter" data-filter="lunch">
+Lunch
+</button>
+
+<button class="filter" data-filter="dinner">
+Dinner
+</button>
+
+<button class="filter" data-filter="desserts">
+Desserts
+</button>
+
+<button class="filter" data-filter="appetizers">
+Appetizers
+</button>
+
+<button class="filter" data-filter="drinks">
+Drinks
+</button>
+
+<button class="filter" data-filter="family">
+Family Recipes
+</button>
+
+<button class="filter" data-filter="favorites">
+♡ Favorites
+</button>
+
+</nav>
+
+
+<section class="grid" id="grid"></section>
+
+
+<div class="empty" id="empty">
+No recipes here yet — the cookbook is just getting started.
+</div>
+
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+<img
+src="sofi mendiola.JPG"
+alt="Sofi Mendiola"
+class="footer-photo"
+>
+
+<p class="footer-text">
+Made with ♡ by <strong>Sofi Mendiola</strong>
+</p>
+
+</footer>
+
+
+<dialog id="recipeDialog">
+
+<div class="modal" id="modal"></div>
+
+</dialog>
+
+
 <script>
+
+
 const recipes=[
-{id:'lentejas',title:"Mom's Lentejas",category:'dinner',family:true,from:'From Mom',desc:'A comforting lentil soup with ham, potatoes, carrots, celery, and a rich savory broth.',servings:'Family recipe',time:'About 1 hr+',photo:'lentils',ingredients:['1 ham shank','1 medium onion','Water, as needed','1 box beef broth','Celery','Carrots','Potatoes','Lentil beans','Chicken bouillon, if needed'],steps:['Put the ham shank and onion in a pot.','Add the beef broth and enough water to completely submerge the ham shank.','Once the pot starts to make noise, set a timer for 20 minutes.','Turn off the heat and let it rest for 20–30 minutes.','Remove the ham from the pot.','Use an immersion blender to blend the onion and liquid in the pot.','Bring the liquid to a boil.','Add the lentils, potatoes, celery, and carrots.','Add more water if necessary; the lentils will absorb liquid as they cook.','Shred the ham and add it back to the pot.','Taste and add chicken bouillon if you want more flavor.'],note:'The original family recipe does not list exact amounts for the vegetables, lentils, or bouillon — keep those flexible to preserve Mom’s version.'},
-{id:'orzo',title:'Creamy Tuscan Chicken Orzo',category:'dinner',family:false,from:'Sofi’s Favorite',desc:'Creamy chicken and orzo with sun-dried tomatoes, spinach, parmesan, and Italian seasoning.',servings:'6 servings',time:'Weeknight dinner',photo:'orzo',ingredients:['1.5 lb boneless, skinless chicken breast, cubed','2 tbsp olive oil','4–5 cloves garlic, mashed','¾ cup sun-dried tomatoes, packed in oil and drained','2 tsp Italian seasoning','2 tsp paprika','½ tsp kosher salt','1 tsp ground black pepper','1 cup orzo','2¾ cups chicken broth or water','¾ cup full-fat coconut milk or heavy cream','2 large handfuls fresh spinach','¾ cup freshly grated parmesan'],steps:['Pat the chicken dry and cut it into cubes.','Heat a skillet over medium-high heat and add the olive oil.','Add chicken and cook 2–3 minutes, until the edges begin to cook.','Add sun-dried tomatoes, garlic, Italian seasoning, paprika, salt, and pepper. Cook 3–4 minutes.','Stir in the orzo and broth.','Reduce heat to medium, cover, and cook for 12 minutes, stirring every few minutes so the orzo does not stick.','Once the orzo is cooked, stir in the coconut milk or heavy cream and spinach until the spinach wilts.','Stir in the parmesan.','Remove from heat and serve immediately.'],note:'A cozy one-pan dinner you make often. Original recipe by Nicole Modic / Kalejunkie.'}
+
+
+/* MOM'S LENTEJAS */
+
+{
+id:'lentejas',
+
+title:"Mom's Lentejas",
+
+category:'dinner',
+
+family:true,
+
+from:'From Mom',
+
+desc:'A comforting lentil soup with ham, potatoes, carrots, celery, and a rich savory broth.',
+
+servings:'Family recipe',
+
+time:'About 1 hr+',
+
+ingredients:[
+
+'1 ham shank',
+
+'1 medium onion',
+
+'Water, as needed',
+
+'1 box beef broth',
+
+'Celery',
+
+'Carrots',
+
+'Potatoes',
+
+'Lentil beans',
+
+'Chicken bouillon, if needed'
+
+],
+
+steps:[
+
+'Put the ham shank and onion in a pot.',
+
+'Add the beef broth and enough water to completely submerge the ham shank.',
+
+'Once the pot starts to make noise, set a timer for 20 minutes.',
+
+'Turn off the heat and let it rest for 20–30 minutes.',
+
+'Remove the ham from the pot.',
+
+'Use an immersion blender to blend the onion and liquid in the pot.',
+
+'Bring the liquid to a boil.',
+
+'Add the lentils, potatoes, celery, and carrots.',
+
+'Add more water if necessary; the lentils will absorb liquid as they cook.',
+
+'Shred the ham and add it back to the pot.',
+
+'Taste and add chicken bouillon if you want more flavor.'
+
+],
+
+note:'The original family recipe does not list exact amounts for the vegetables, lentils, or bouillon — keep those flexible to preserve Mom’s version.'
+
+},
+
+
+/* CREAMY TUSCAN CHICKEN ORZO */
+
+{
+id:'orzo',
+
+title:'Creamy Tuscan Chicken Orzo',
+
+category:'dinner',
+
+family:false,
+
+from:'Sofi’s Favorite',
+
+desc:'Creamy chicken and orzo with sun-dried tomatoes, spinach, parmesan, and Italian seasoning.',
+
+servings:'6 servings',
+
+time:'Weeknight dinner',
+
+ingredients:[
+
+'1.5 lb boneless, skinless chicken breast, cubed',
+
+'2 tbsp olive oil',
+
+'4–5 cloves garlic, mashed',
+
+'¾ cup sun-dried tomatoes, packed in oil and drained',
+
+'2 tsp Italian seasoning',
+
+'2 tsp paprika',
+
+'½ tsp kosher salt',
+
+'1 tsp ground black pepper',
+
+'1 cup orzo',
+
+'2¾ cups chicken broth or water',
+
+'¾ cup full-fat coconut milk or heavy cream',
+
+'2 large handfuls fresh spinach',
+
+'¾ cup freshly grated parmesan'
+
+],
+
+steps:[
+
+'Pat the chicken dry and cut it into cubes.',
+
+'Heat a skillet over medium-high heat and add the olive oil.',
+
+'Add chicken and cook 2–3 minutes, until the edges begin to cook.',
+
+'Add sun-dried tomatoes, garlic, Italian seasoning, paprika, salt, and pepper. Cook 3–4 minutes.',
+
+'Stir in the orzo and broth.',
+
+'Reduce heat to medium, cover, and cook for 12 minutes, stirring every few minutes so the orzo does not stick.',
+
+'Once the orzo is cooked, stir in the coconut milk or heavy cream and spinach until the spinach wilts.',
+
+'Stir in the parmesan.',
+
+'Remove from heat and serve immediately.'
+
+],
+
+note:'A cozy one-pan dinner you make often. Original recipe by Nicole Modic / Kalejunkie.'
+
+},
+
+
+/* GARLIC MAPLE SUGAR GLAZED SALMON */
+
+{
+id:'salmon',
+
+title:'Garlic Maple Sugar Glazed Salmon',
+
+category:'dinner',
+
+family:false,
+
+from:'Sofi’s Favorite',
+
+desc:'Tender baked salmon coated in a sweet and savory maple sugar, soy sauce, garlic, and lemon glaze.',
+
+servings:'4 servings',
+
+time:'30 minutes',
+
+ingredients:[
+
+'2 lb salmon',
+
+'2 tbsp olive oil',
+
+'¼ cup maple sugar',
+
+'¼ cup soy sauce',
+
+'3 garlic cloves, minced',
+
+'Juice of 1 lemon',
+
+'1 tsp salt',
+
+'½ tsp pepper',
+
+'Sliced lemons and chopped parsley for garnish, if desired'
+
+],
+
+steps:[
+
+'Preheat the oven to 350°F.',
+
+'Line a baking sheet with aluminum foil. Place the salmon on top and sprinkle with salt and pepper.',
+
+'Fold up the sides of the aluminum foil around the salmon.',
+
+'In a small bowl, whisk together the olive oil, maple sugar, soy sauce, garlic, lemon juice, salt, and pepper.',
+
+'Pour the glaze over the salmon.',
+
+'Cover the salmon with aluminum foil and seal.',
+
+'Bake for 20–25 minutes, or until the salmon is cooked through.',
+
+'Remove the foil from the top and baste the salmon with the sauce in the foil.',
+
+'Broil for 3–5 minutes, or until the top is brown and caramelized.',
+
+'Garnish with sliced lemons and chopped parsley if desired.'
+
+],
+
+note:'This version uses maple sugar in place of the brown sugar from the original recipe.',
+
+source:'Adapted from Garlic Brown Sugar Glazed Salmon by Alyssa Rivers / The Recipe Critic.'
+
+},
+
+
+/* HOMEMADE GRANOLA */
+
+{
+id:'granola',
+
+title:'Homemade Granola',
+
+category:'breakfast',
+
+family:false,
+
+from:'Sofi’s Favorite',
+
+desc:'Crunchy homemade granola with oats, coconut, pumpkin seeds, chia seeds, pecans, maple syrup, and cranberries.',
+
+servings:'Homemade batch',
+
+time:'30–40 minutes',
+
+ingredients:[
+
+'3 cups rolled oats',
+
+'½ cup shredded coconut',
+
+'⅓ cup toasted pumpkin seeds',
+
+'2 tbsp chia seeds',
+
+'½ cup chopped pecans',
+
+'½ cup maple syrup',
+
+'½ cup melted coconut oil',
+
+'½ cup dried cranberries'
+
+],
+
+steps:[
+
+'Preheat the oven to 325°F.',
+
+'Mix together the rolled oats, shredded coconut, pumpkin seeds, chia seeds, pecans, maple syrup, and melted coconut oil.',
+
+'Leave the dried cranberries out for now.',
+
+'Spread the mixture evenly on a sheet pan.',
+
+'Bake for 30–40 minutes, stirring every 10 minutes, until golden.',
+
+'Allow the granola to cool completely.',
+
+'Mix in the dried cranberries.',
+
+'Serve with Greek yogurt and raspberries, or enjoy on its own.'
+
+],
+
+note:'A simple homemade granola that is perfect for breakfast or a snack.'
+
+},
+
+
+/* STRAWBERRY CHIA PUDDING */
+
+{
+id:'chia',
+
+title:'Strawberry Chia Pudding',
+
+category:'breakfast',
+
+family:false,
+
+from:'Sofi’s Favorite',
+
+desc:'Creamy strawberry chia pudding made with coconut milk, Greek yogurt, fresh strawberries, maple syrup, and vanilla.',
+
+servings:'Meal prep',
+
+time:'Refrigerate overnight',
+
+ingredients:[
+
+'½ cup chia seeds',
+
+'2 cups coconut milk',
+
+'1 cup Greek yogurt',
+
+'1 lb strawberries, puréed',
+
+'2 tbsp maple syrup',
+
+'1 tsp vanilla'
+
+],
+
+steps:[
+
+'Purée the strawberries.',
+
+'Combine the chia seeds, coconut milk, Greek yogurt, puréed strawberries, maple syrup, and vanilla.',
+
+'Mix everything together well.',
+
+'Divide the mixture evenly into jars or containers.',
+
+'Refrigerate overnight.',
+
+'Serve chilled.'
+
+],
+
+note:'An easy make-ahead breakfast that can be prepared the night before.'
+
+}
+
 ];
-let favorites=JSON.parse(localStorage.getItem('sofiCookbookFavorites')||'[]');let active='all';
-function render(){const g=document.getElementById('grid');g.innerHTML='';let shown=recipes.filter(r=>active==='all'||r.category===active||(active==='family'&&r.family)||(active==='favorites'&&favorites.includes(r.id)));document.getElementById('empty').style.display=shown.length?'none':'block';shown.forEach(r=>{const c=document.createElement('article');c.className='card';c.innerHTML=`<div class="photo ${r.photo}"><div class="dish">Photo of<br>${r.title}<br><small>♡ add your own photo</small></div><button class="heart ${favorites.includes(r.id)?'saved':''}" aria-label="favorite">♡</button></div><div class="body"><span class="tag">${r.from}</span><h2>${r.title}</h2><div class="desc">${r.desc}</div><div class="meta"><span class="pill">${r.category[0].toUpperCase()+r.category.slice(1)}</span><span class="pill">${r.servings}</span><span class="pill">${r.time}</span></div><button class="open">View recipe</button></div>`;c.querySelector('.heart').onclick=e=>{e.stopPropagation();favorites=favorites.includes(r.id)?favorites.filter(x=>x!==r.id):[...favorites,r.id];localStorage.setItem('sofiCookbookFavorites',JSON.stringify(favorites));render()};c.querySelector('.open').onclick=()=>openRecipe(r);g.appendChild(c)})}
-function openRecipe(r){document.getElementById('modal').innerHTML=`<div class="top"><div><span class="tag">${r.from}</span><h2>${r.title}</h2><div class="meta"><span class="pill">${r.servings}</span><span class="pill">${r.time}</span></div></div><button class="close" onclick="recipeDialog.close()">×</button></div><p>${r.desc}</p><div class="note">${r.note}</div><div class="cols"><section><h3>Ingredients</h3><ul>${r.ingredients.map(x=>`<li>${x}</li>`).join('')}</ul></section><section><h3>Instructions</h3><ol>${r.steps.map(x=>`<li>${x}</li>`).join('')}</ol></section></div>${r.id==='orzo'?'<div class="source">Source note: Creamy Tuscan Chicken Orzo by Nicole Modic (Kalejunkie).</div>':''}`;document.getElementById('recipeDialog').showModal()}
-document.querySelectorAll('.filter').forEach(b=>b.onclick=()=>{document.querySelector('.filter.active').classList.remove('active');b.classList.add('active');active=b.dataset.filter;render()});document.getElementById('recipeDialog').addEventListener('click',e=>{if(e.target.id==='recipeDialog')e.target.close()});render();
-</script></body></html>
+
+
+let favorites=
+JSON.parse(
+localStorage.getItem('sofiCookbookFavorites')||'[]'
+);
+
+
+let active='all';
+
+
+function render(){
+
+const g=
+document.getElementById('grid');
+
+g.innerHTML='';
+
+
+let shown=
+recipes.filter(r=>
+
+active==='all'
+
+||
+
+r.category===active
+
+||
+
+(active==='family' && r.family)
+
+||
+
+(active==='favorites' && favorites.includes(r.id))
+
+);
+
+
+document.getElementById('empty').style.display=
+shown.length ? 'none' : 'block';
+
+
+shown.forEach(r=>{
+
+
+const c=
+document.createElement('article');
+
+
+c.className='card';
+
+
+c.innerHTML=`
+
+<div class="card-accent"></div>
+
+<button
+class="heart ${favorites.includes(r.id)?'saved':''}"
+aria-label="favorite"
+>
+
+♡
+
+</button>
+
+
+<div class="body">
+
+
+<span class="tag">
+
+${r.from}
+
+</span>
+
+
+<h2>
+
+${r.title}
+
+</h2>
+
+
+<div class="desc">
+
+${r.desc}
+
+</div>
+
+
+<div class="meta">
+
+
+<span class="pill">
+
+${r.category[0].toUpperCase()+r.category.slice(1)}
+
+</span>
+
+
+<span class="pill">
+
+${r.servings}
+
+</span>
+
+
+<span class="pill">
+
+${r.time}
+
+</span>
+
+
+</div>
+
+
+<button class="open">
+
+View recipe
+
+</button>
+
+
+</div>
+
+`;
+
+
+c.querySelector('.heart').onclick=e=>{
+
+
+e.stopPropagation();
+
+
+favorites=
+favorites.includes(r.id)
+
+?
+
+favorites.filter(x=>x!==r.id)
+
+:
+
+[...favorites,r.id];
+
+
+localStorage.setItem(
+
+'sofiCookbookFavorites',
+
+JSON.stringify(favorites)
+
+);
+
+
+render();
+
+};
+
+
+c.querySelector('.open').onclick=
+()=>openRecipe(r);
+
+
+g.appendChild(c);
+
+
+});
+
+}
+
+
+function openRecipe(r){
+
+
+document.getElementById('modal').innerHTML=`
+
+<div class="top">
+
+
+<div>
+
+
+<span class="tag">
+
+${r.from}
+
+</span>
+
+
+<h2>
+
+${r.title}
+
+</h2>
+
+
+<div class="meta">
+
+
+<span class="pill">
+
+${r.servings}
+
+</span>
+
+
+<span class="pill">
+
+${r.time}
+
+</span>
+
+
+</div>
+
+
+</div>
+
+
+<button
+class="close"
+onclick="recipeDialog.close()"
+>
+
+×
+
+</button>
+
+
+</div>
+
+
+<p>
+
+${r.desc}
+
+</p>
+
+
+<div class="note">
+
+${r.note}
+
+</div>
+
+
+<div class="cols">
+
+
+<section>
+
+
+<h3>
+
+Ingredients
+
+</h3>
+
+
+<ul>
+
+${r.ingredients.map(x=>`<li>${x}</li>`).join('')}
+
+</ul>
+
+
+</section>
+
+
+<section>
+
+
+<h3>
+
+Instructions
+
+</h3>
+
+
+<ol>
+
+${r.steps.map(x=>`<li>${x}</li>`).join('')}
+
+</ol>
+
+
+</section>
+
+
+</div>
+
+
+${r.source
+? `<div class="source">Source note: ${r.source}</div>`
+: r.id==='orzo'
+? '<div class="source">Source note: Creamy Tuscan Chicken Orzo by Nicole Modic (Kalejunkie).</div>'
+: ''
+}
+
+`;
+
+
+document
+.getElementById('recipeDialog')
+.showModal();
+
+}
+
+
+document
+.querySelectorAll('.filter')
+.forEach(b=>b.onclick=()=>{
+
+
+document
+.querySelector('.filter.active')
+.classList.remove('active');
+
+
+b.classList.add('active');
+
+
+active=
+b.dataset.filter;
+
+
+render();
+
+
+});
+
+
+document
+.getElementById('recipeDialog')
+.addEventListener('click',e=>{
+
+
+if(e.target.id==='recipeDialog'){
+
+e.target.close();
+
+}
+
+
+});
+
+
+render();
+
+
+</script>
+
+
+</body>
+
+</html>
